@@ -3,20 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.server = void 0;
-const http_1 = __importDefault(require("http"));
-const router = require('find-my-way')();
-router.on('GET', '/', (req, res, params) => {
-    console.log("Nothing to see here...");
-    res.end('{"message":"Nothing to see here... try something else"}');
+var express = require('express');
+const body_parser_1 = __importDefault(require("body-parser"));
+var app = express();
+app.use(body_parser_1.default.json());
+app.post('/notifications/send', function (request, response) {
+    console.log(request.body); // your JSON
+    var body = request.body;
+    console.log(body.user_id);
+    console.log(body.notification_mode);
+    console.log(body.contact_details.email);
+    console.log(body.contact_details.phone_number);
+    console.log(body.contact_details.device_id);
+    response.send(request.body); // echo the result back
 });
-router.on('POST', '/notifications/send', (req, res, params) => {
-    console.log(req.body);
-    res.end('{"message":"Notification will be sent"}');
-});
-exports.server = http_1.default.createServer((req, res) => {
-    router.lookup(req, res);
-});
-exports.server.listen(3000, () => {
-    console.log("Server running on http://localhost:3000/");
-});
+app.listen(3000);

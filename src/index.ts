@@ -1,20 +1,18 @@
-import http from "http";
-const router = require('find-my-way')()
+var express = require('express');
+import bodyParser from 'body-parser';
 
-router.on('GET', '/', (req: any, res: any, params: any) => {
-  console.log("Nothing to see here...")
-  res.end('{"message":"Nothing to see here... try something else"}')
-})
+var app = express();
+app.use(bodyParser.json());
 
-router.on('POST', '/notifications/send', (req: any, res: any, params: any) => {
-  console.log(req.body)
-  res.end('{"message":"Notification will be sent"}')
-})
-
-export const server = http.createServer((req, res) => {
-  router.lookup(req, res)
-})
-
-server.listen(3000, () => {
-  console.log("Server running on http://localhost:3000/");
+app.post('/notifications/send', function(request: any, response: any){
+  console.log(request.body);      // your JSON
+  var body = request.body
+  console.log(body.user_id)
+  console.log(body.notification_mode)
+  console.log(body.contact_details.email)
+  console.log(body.contact_details.phone_number)
+  console.log(body.contact_details.device_id)
+  response.send(request.body);    // echo the result back
 });
+
+app.listen(3000);
