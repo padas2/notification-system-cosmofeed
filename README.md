@@ -24,3 +24,5 @@
 ### Assignment Scope:
 * Not including test-setup, linting setup.
 * Will be mocking Database interactions, Kafka interactions.
+
+https://github.com/javieraviles/node-typescript-koa-rest/tree/master
