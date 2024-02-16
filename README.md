@@ -20,3 +20,7 @@
 * Kafka as Message Queue: To function as internal message queue for other Notification system workers.
 * Notification service workers: A kafka consumer which reads message from a designated queue and hit the corresponding 3rd party system to send out
                                 a notification.
+
+### Assignment Scope:
+* Not including test-setup, linting setup.
+* Will be mocking Database interactions, Kafka interactions.
