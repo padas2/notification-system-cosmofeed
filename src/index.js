@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 const body_parser_1 = __importDefault(require("body-parser"));
 const notification_1 = require("../src/service/notification");
+const kafka_1 = require("../src/client/kafka/kafka");
 var app = express();
 app.use(body_parser_1.default.json());
+kafka_1.KafkaProducer.Init();
+kafka_1.KafkaProducer.Start();
 app.post('/notifications/send', function (request, response) {
     console.log(request.body);
     var body = request.body;

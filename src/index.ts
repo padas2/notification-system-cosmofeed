@@ -1,9 +1,13 @@
 var express = require('express');
 import bodyParser from 'body-parser';
 import { NotificationService } from '../src/service/notification'
+import { KafkaProducer } from  '../src/client/kafka/kafka'
 
 var app = express();
 app.use(bodyParser.json());
+
+KafkaProducer.Init()
+KafkaProducer.Start()
 
 app.post('/notifications/send', function(request: any, response: any){
   console.log(request.body)

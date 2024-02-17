@@ -1,18 +1,16 @@
 import { Kafka, Message, Producer, ProducerBatch, TopicMessages } from 'kafkajs'
+import { NotificationMessage } from '../../model/kafka'
 
-interface NotificationMessage { 
-  notification_mode: string 
-  notification_endpoint_id: string
-}
 
-export class ProducerFactory {
-  private producer: Producer
 
-  constructor() {
-    this.producer = this.createProducer()
+export class KafkaProducer {
+  private static producer: Producer
+
+  public static Init() {
+    KafkaProducer.producer = KafkaProducer.createProducer()
   }
 
-  public async start(): Promise<void> {
+  public static async Start(): Promise<void> {
     try {
       await this.producer.connect()
     } catch (error) {
@@ -20,11 +18,11 @@ export class ProducerFactory {
     }
   }
 
-  public async shutdown(): Promise<void> {
+  public static async Shutdown(): Promise<void> {
     await this.producer.disconnect()
   }
 
-  public async sendBatch(messages: Array<NotificationMessage>, topic: string): Promise<void> {
+  public static async SendBatch(messages: Array<NotificationMessage>, topic: string): Promise<void> {
     const kafkaMessages: Array<Message> = messages.map((message) => {
       return {
         value: JSON.stringify(message)
@@ -41,7 +39,7 @@ export class ProducerFactory {
     await this.producer.sendBatch(batch)
   }
 
-  private createProducer() : Producer {
+  private static createProducer() : Producer {
     const kafka = new Kafka({
       clientId: 'local-producer-client',
       brokers: ['localhost:9092'],

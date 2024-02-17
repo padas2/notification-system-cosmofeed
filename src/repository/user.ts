@@ -13,8 +13,6 @@ export class MockUserRepo {
     console.log("Received notification mode details : ", notification_mode)
 
     console.log("Invoking mock database details verifier ....")
-    console.log("Able to successfully extract user contact details...")
-
     switch(notification_mode) {
       case "email": 
         return "supreeth.padavala@gmail.com"

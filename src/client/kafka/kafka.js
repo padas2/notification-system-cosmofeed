@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProducerFactory = void 0;
+exports.KafkaProducer = void 0;
 const kafkajs_1 = require("kafkajs");
-class ProducerFactory {
-    constructor() {
-        this.producer = this.createProducer();
+class KafkaProducer {
+    static Init() {
+        KafkaProducer.producer = KafkaProducer.createProducer();
     }
-    start() {
+    static Start() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.producer.connect();
@@ -25,12 +25,12 @@ class ProducerFactory {
             }
         });
     }
-    shutdown() {
+    static Shutdown() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.producer.disconnect();
         });
     }
-    sendBatch(messages, topic) {
+    static SendBatch(messages, topic) {
         return __awaiter(this, void 0, void 0, function* () {
             const kafkaMessages = messages.map((message) => {
                 return {
@@ -47,7 +47,7 @@ class ProducerFactory {
             yield this.producer.sendBatch(batch);
         });
     }
-    createProducer() {
+    static createProducer() {
         const kafka = new kafkajs_1.Kafka({
             clientId: 'local-producer-client',
             brokers: ['localhost:9092'],
@@ -55,4 +55,4 @@ class ProducerFactory {
         return kafka.producer();
     }
 }
-exports.ProducerFactory = ProducerFactory;
+exports.KafkaProducer = KafkaProducer;
