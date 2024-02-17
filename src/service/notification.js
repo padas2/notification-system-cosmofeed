@@ -6,16 +6,15 @@ const error_1 = require("../../pkg/error");
 const kafka_1 = require("../client/kafka/kafka");
 class NotificationService {
     static SendNotification(userId, notificationMode, message) {
-        // Validate user details
-        var result = user_1.MockUserRepo.IsUserValid(userId);
-        console.log("Is user valid Validation result : ", result);
-        // Get user details
-        var userContactEndpointId = user_1.MockUserRepo.GetUserContactDetails(userId, notificationMode);
-        if (userContactEndpointId == "") {
+        var isUserValid = user_1.InMemoryUsersRepo.IsUserValid(userId);
+        if (!isUserValid) {
+            return new error_1.InternalError("User with provided id not found", 404);
+        }
+        var userContactEndpointId = user_1.InMemoryUsersRepo.GetUserContactDetails(userId, notificationMode);
+        if ((userContactEndpointId == undefined) || (userContactEndpointId == "")) {
             return new error_1.InternalError("User contact endpoint not found", 404);
         }
         console.log("User contact endpoint : ", userContactEndpointId);
-        // Push to Kafka topic
         console.log("Pushing to Kafka messaging queue");
         var topicName = NotificationService.getTopicName(notificationMode);
         var messages = [

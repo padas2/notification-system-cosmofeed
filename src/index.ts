@@ -5,6 +5,7 @@ import { KafkaProducer } from  '../src/client/kafka/kafka'
 import { EmailKafkaConsumer } from  '../src/kafkaconsumer/email/consumer'
 import { SmsKafkaConsumer } from  '../src/kafkaconsumer/sms/consumer'
 import { PNKafkaConsumer } from  '../src/kafkaconsumer/pn/consumer'
+import { InMemoryUsersRepo } from '../src/repository/user'
 
 var app = express();
 app.use(bodyParser.json());
@@ -20,6 +21,8 @@ SmsKafkaConsumer.StartBatchConsumer()
 
 PNKafkaConsumer.Init()
 PNKafkaConsumer.StartBatchConsumer()
+
+InMemoryUsersRepo.Init()
 
 app.post('/notifications/send', function(request: any, response: any){
   console.log(request.body)

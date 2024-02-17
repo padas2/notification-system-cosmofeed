@@ -1,25 +1,32 @@
-export class MockUserRepo {
-  public static IsUserValid(user_id: number): boolean {
-    // Mocking for now
-    console.log("Received user_id : ", user_id)
-    console.log("Invoking mock database user details verifier ....")
-    console.log("User details are verified")
-    return true
+import { User} from '../model/user'
+
+export class InMemoryUsersRepo {
+  private static users: Map<number, User>
+  
+  static Init() {
+    InMemoryUsersRepo.users = new Map<number, User>
+    InMemoryUsersRepo.users.set(2, new User("Harry Potter", "9502272879", "harry.potter@gmail.com", "654C4DB3-3F68-4969-8GF6-80EA16B46EB0"))
+    InMemoryUsersRepo.users.set(3, new User("Aragorn", "9502272876", "aragorn@gmail.com", "654C4DB3-3F68-4969-8ED2-80EA16B46EB0"))
+    InMemoryUsersRepo.users.set(4, new User("Jon Snow", "9502272875", "jon.snow.padavala@gmail.com", "654C4DB3-3F68-4969-8ED2-80EA16B46EB0"))
+    InMemoryUsersRepo.users.set(5, new User("Benjen Stark", "95023228734", "benjen.stark@gmail.com", "654C4DB3-3F68-4969-8ED2-80EA16B46EB0"))
+    InMemoryUsersRepo.users.set(6, new User("Robert Baratheon", "66802272878", "robert.baratheon@gmail.com", "654C4DB3-3F68-4969-8ED2-80EA16B46EB0"))
   }
 
-  public static GetUserContactDetails(user_id: number, notification_mode: string): string {
-    // Mocking for now
-    console.log("Received user_id : ", user_id)
+  public static IsUserValid(user_id: number): boolean {
+    return this.users.has(user_id)
+  }
+
+  public static GetUserContactDetails(user_id: number, notification_mode: string): string | undefined{
     console.log("Received notification mode details : ", notification_mode)
 
-    console.log("Invoking mock database details verifier ....")
+    var user = this.users.get(user_id)
     switch(notification_mode) {
       case "email": 
-        return "supreeth.padavala@gmail.com"
+        return user?.email
       case "sms": 
-        return "9502272878"
+        return user?.phoneNumber
       case "push_notification": 
-        return "deviceTokenId"
+        return user?.deviceTokenId
     }
     return ""
   }

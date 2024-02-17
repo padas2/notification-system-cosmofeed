@@ -10,6 +10,7 @@ const kafka_1 = require("../src/client/kafka/kafka");
 const consumer_1 = require("../src/kafkaconsumer/email/consumer");
 const consumer_2 = require("../src/kafkaconsumer/sms/consumer");
 const consumer_3 = require("../src/kafkaconsumer/pn/consumer");
+const user_1 = require("../src/repository/user");
 var app = express();
 app.use(body_parser_1.default.json());
 kafka_1.KafkaProducer.Init();
@@ -20,6 +21,7 @@ consumer_2.SmsKafkaConsumer.Init();
 consumer_2.SmsKafkaConsumer.StartBatchConsumer();
 consumer_3.PNKafkaConsumer.Init();
 consumer_3.PNKafkaConsumer.StartBatchConsumer();
+user_1.InMemoryUsersRepo.Init();
 app.post('/notifications/send', function (request, response) {
     console.log(request.body);
     var body = request.body;
