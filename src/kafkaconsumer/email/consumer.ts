@@ -1,5 +1,5 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
-import { MessageProcessor } from '../email/messageProcessor'
+import { MessageProcessor } from './messageProcessor'
 
 export class EmailKafkaConsumer {
   private static kafkaConsumer: Consumer

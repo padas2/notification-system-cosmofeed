@@ -9,16 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PNKafkaConsumer = void 0;
+exports.EmailKafkaConsumer = void 0;
 const kafkajs_1 = require("kafkajs");
-class PNKafkaConsumer {
+const messageProcessor_1 = require("./messageProcessor");
+class EmailKafkaConsumer {
     static Init() {
         this.kafkaConsumer = this.createKafkaConsumer();
     }
     static StartBatchConsumer() {
         return __awaiter(this, void 0, void 0, function* () {
             const topic = {
-                topics: ['pn_topic'],
+                topics: ['email_topic'],
                 fromBeginning: false
             };
             try {
@@ -29,7 +30,8 @@ class PNKafkaConsumer {
                         const { batch } = eachBatchPayload;
                         for (const message of batch.messages) {
                             const prefix = `${batch.topic}[${batch.partition} | ${message.offset}] / ${message.timestamp}`;
-                            console.log(`topic: pn_topic - ${prefix} ${message.key}#${message.value}`);
+                            console.log(`topic: email_topic - ${prefix} ${message.key}#${message.value}`);
+                            messageProcessor_1.MessageProcessor.Process(message.value);
                         }
                     })
                 });
@@ -49,8 +51,8 @@ class PNKafkaConsumer {
             clientId: 'local-producer-client',
             brokers: ['localhost:9092'],
         });
-        const consumer = kafka.consumer({ groupId: 'pn_topic_consumer_group' });
+        const consumer = kafka.consumer({ groupId: 'email_topic_consumer_group' });
         return consumer;
     }
 }
-exports.PNKafkaConsumer = PNKafkaConsumer;
+exports.EmailKafkaConsumer = EmailKafkaConsumer;
