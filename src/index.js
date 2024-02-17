@@ -5,21 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 const body_parser_1 = __importDefault(require("body-parser"));
-const user_1 = require("../src/repository/user");
+const notification_1 = require("../src/service/notification");
 var app = express();
 app.use(body_parser_1.default.json());
 app.post('/notifications/send', function (request, response) {
-    console.log(request.body); // your JSON
+    console.log(request.body);
     var body = request.body;
-    var result = user_1.UserRepo.IsUserValid(body.user_id);
-    console.log("Is user valid Validation result : ", result);
-    var userContactDetails = user_1.UserRepo.GetUserContactDetails(body.user_id, body.notification_mode);
-    if (userContactDetails == "") {
+    var error = notification_1.NotificationService.SendNotification(body.user_id, body.notification_mode, body.message);
+    if (error != null) {
         response.setHeader('Content-Type', 'application/json');
-        response.status(400).end(JSON.stringify({ data: "Incorect request format" }));
+        response.status(error.code).end(JSON.stringify({ data: error.message }));
         return;
     }
-    console.log("User contact result : ", userContactDetails);
     response.setHeader('Content-Type', 'application/json');
     response.end(JSON.stringify({ data: "Notification will be sent" }));
 });

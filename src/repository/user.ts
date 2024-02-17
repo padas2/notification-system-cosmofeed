@@ -1,4 +1,4 @@
-export class UserRepo {
+export class MockUserRepo {
   public static IsUserValid(user_id: number): boolean {
     // Mocking for now
     console.log("Received user_id : ", user_id)

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRepo = void 0;
-class UserRepo {
+exports.MockUserRepo = void 0;
+class MockUserRepo {
     static IsUserValid(user_id) {
         // Mocking for now
         console.log("Received user_id : ", user_id);
@@ -26,4 +26,4 @@ class UserRepo {
         return "";
     }
 }
-exports.UserRepo = UserRepo;
+exports.MockUserRepo = MockUserRepo;

@@ -1,24 +1,20 @@
 var express = require('express');
 import bodyParser from 'body-parser';
-import { UserRepo } from '../src/repository/user'
+import { NotificationService } from '../src/service/notification'
 
 var app = express();
 app.use(bodyParser.json());
 
 app.post('/notifications/send', function(request: any, response: any){
-  console.log(request.body);      // your JSON
+  console.log(request.body)
   var body = request.body
-
-  var result = UserRepo.IsUserValid(body.user_id)
-  console.log("Is user valid Validation result : ", result)
-
-  var userContactDetails = UserRepo.GetUserContactDetails(body.user_id, body.notification_mode)
-  if (userContactDetails == "") {
+  
+  var error = NotificationService.SendNotification(body.user_id, body.notification_mode, body.message)
+  if (error != null) {
     response.setHeader('Content-Type', 'application/json');
-    response.status(400).end(JSON.stringify({ data: "Incorect request format" }));  
+    response.status(error.code).end(JSON.stringify({ data: error.message }));  
     return
   }
-  console.log("User contact result : ", userContactDetails)
   
   response.setHeader('Content-Type', 'application/json');
   response.end(JSON.stringify({ data: "Notification will be sent" }));
