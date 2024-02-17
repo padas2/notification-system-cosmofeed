@@ -2,12 +2,24 @@ var express = require('express');
 import bodyParser from 'body-parser';
 import { NotificationService } from '../src/service/notification'
 import { KafkaProducer } from  '../src/client/kafka/kafka'
+import { EmailKafkaConsumer } from  './consumer/kafka/email/email'
+import { SmsKafkaConsumer } from  '../src/consumer/kafka/sms/sms'
+import { PNKafkaConsumer } from  '../src/consumer/kafka/pn/pn'
 
 var app = express();
 app.use(bodyParser.json());
 
 KafkaProducer.Init()
 KafkaProducer.Start()
+
+EmailKafkaConsumer.Init()
+EmailKafkaConsumer.StartBatchConsumer()
+
+SmsKafkaConsumer.Init()
+SmsKafkaConsumer.StartBatchConsumer()
+
+PNKafkaConsumer.Init()
+PNKafkaConsumer.StartBatchConsumer()
 
 app.post('/notifications/send', function(request: any, response: any){
   console.log(request.body)
