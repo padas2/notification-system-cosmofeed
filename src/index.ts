@@ -2,9 +2,9 @@ var express = require('express');
 import bodyParser from 'body-parser';
 import { NotificationService } from '../src/service/notification'
 import { KafkaProducer } from  '../src/client/kafka/kafka'
-import { EmailKafkaConsumer } from  './consumer/kafka/email/email'
-import { SmsKafkaConsumer } from  '../src/consumer/kafka/sms/sms'
-import { PNKafkaConsumer } from  '../src/consumer/kafka/pn/pn'
+import { EmailKafkaConsumer } from  './kafkaconsumer/email/email'
+import { SmsKafkaConsumer } from  './kafkaconsumer/sms/sms'
+import { PNKafkaConsumer } from  './kafkaconsumer/pn/pn'
 
 var app = express();
 app.use(bodyParser.json());

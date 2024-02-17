@@ -1,4 +1,5 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
+import { MessageProcessor } from '../email/messageProcessor'
 
 export class EmailKafkaConsumer {
   private static kafkaConsumer: Consumer
@@ -22,6 +23,7 @@ export class EmailKafkaConsumer {
           for (const message of batch.messages) {
             const prefix = `${batch.topic}[${batch.partition} | ${message.offset}] / ${message.timestamp}`
             console.log(`topic: email_topic - ${prefix} ${message.key}#${message.value}`) 
+            MessageProcessor.Process(message.value)  
           }
         }
       })
