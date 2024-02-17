@@ -21,8 +21,29 @@
 * Notification service workers: A kafka consumer which reads message from a designated queue and hit the corresponding 3rd party system to send out
                                 a notification.
 
+### Pre-requisites and Constraints:
+* Will be using an in-memory data structure as the Database against which all necessary validations will be run.
+* For this binary to run, a local kafka cluster running on **9092** port is needed as the system is currently hardcoded to use that.
+  
+### Api-Contracts:
+* Send notification Rest Api:
+  * POST notifications/send
+  ```
+    {
+      "user_id": 6,
+      "notification_mode": "push_notification",
+      "message": "Hello Loyal customer, wishing you a Happy New Year()"
+    }
+  ```  
+
 ### Assignment Scope:
 * Not including test-setup, linting setup.
-* Will be mocking Database interactions, Kafka interactions.
+* Keeping all code for main notification system and worker in this very repository for now.
+  * If we need to design for huge scale, the worker code can be run as a separate code repository in itself and deployed as a separate pod in itself.
 
-https://github.com/javieraviles/node-typescript-koa-rest/tree/master
+### Improvements:
+* Code structure can be improved to follow a Domain Driven Design.
+* In-memory db can be replaced with an actual Database interaction.
+* All hardcoded infrastructure variables to be replaced with ENVs injected at runtime.
+* Routers to be defined separately rather than in index.ts.
+* Actual integration can be done with FCM client, TextLocal client rather than keeping empty for now.
