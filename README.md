@@ -39,8 +39,8 @@
         
 ### Api-Contracts:
 * Send notification Rest Api:
-  * POST notifications/send
   ```
+    POST http://localhost:3000/notifications/send/send
     {
       "user_id": 6, // allowed-values: [2,3,4,5,6]
       "notification_mode": "push_notification", [email, sms, push_notification]
