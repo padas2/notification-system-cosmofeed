@@ -1,5 +1,6 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
 import { MessageProcessor } from '../pn/messageProcessor'
+import { kafkaClientId, pushNotificationTopicName } from '../../globals/globals'
 
 export class PNKafkaConsumer {
   private static kafkaConsumer: Consumer
@@ -10,7 +11,7 @@ export class PNKafkaConsumer {
 
   public static async StartBatchConsumer(): Promise<void> {
     const topic: ConsumerSubscribeTopics = {
-      topics: ['pn_topic'],
+      topics: [pushNotificationTopicName],
       fromBeginning: false
     }
 
@@ -22,7 +23,7 @@ export class PNKafkaConsumer {
           const { batch } = eachBatchPayload
           for (const message of batch.messages) {
             const prefix = `${batch.topic}[${batch.partition} | ${message.offset}] / ${message.timestamp}`
-            console.log(`topic: pn_topic - ${prefix} ${message.key}#${message.value}`) 
+            console.log(`topic: ${pushNotificationTopicName} - ${prefix} ${message.key}#${message.value}`) 
             MessageProcessor.Process(message.value)
           }
         }
@@ -38,7 +39,7 @@ export class PNKafkaConsumer {
 
   private static createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
-      clientId: 'local-producer-client',
+      clientId: kafkaClientId,
       brokers: ['localhost:9092'],
     })
     const consumer = kafka.consumer({ groupId: 'pn_topic_consumer_group' })

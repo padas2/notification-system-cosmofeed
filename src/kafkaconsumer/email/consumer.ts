@@ -1,5 +1,6 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
 import { MessageProcessor } from './messageProcessor'
+import { kafkaClientId, emailTopicName } from '../../globals/globals'
 
 export class EmailKafkaConsumer {
   private static kafkaConsumer: Consumer
@@ -10,7 +11,7 @@ export class EmailKafkaConsumer {
 
   public static async StartBatchConsumer(): Promise<void> {
     const topic: ConsumerSubscribeTopics = {
-      topics: ['email_topic'],
+      topics: [emailTopicName],
       fromBeginning: false
     }
 
@@ -22,7 +23,7 @@ export class EmailKafkaConsumer {
           const { batch } = eachBatchPayload
           for (const message of batch.messages) {
             const prefix = `${batch.topic}[${batch.partition} | ${message.offset}] / ${message.timestamp}`
-            console.log(`topic: email_topic - ${prefix} ${message.key}#${message.value}`) 
+            console.log(`Received message on topic: ${emailTopicName} - ${prefix} ${message.key}#${message.value}`) 
             MessageProcessor.Process(message.value)  
           }
         }
@@ -38,7 +39,7 @@ export class EmailKafkaConsumer {
 
   private static createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
-      clientId: 'local-producer-client',
+      clientId: kafkaClientId,
       brokers: ['localhost:9092'],
     })
     const consumer = kafka.consumer({ groupId: 'email_topic_consumer_group' })
