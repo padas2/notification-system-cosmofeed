@@ -16,12 +16,12 @@ export class NotificationService {
     }
     console.log("User contact endpoint : ", userContactEndpointId)
 
-    console.log("Pushing to Kafka messaging queue")
     var topicName = NotificationService.getTopicName(notificationMode)
     var messages: NotificationMessage[] = [
       {mode: notificationMode, endpointId: userContactEndpointId, message: message}
     ];
     KafkaProducer.SendBatch(messages, topicName)
+    console.log("Successfully pushed message to Kafka messaging queue : ", topicName)
     return null
   }
 

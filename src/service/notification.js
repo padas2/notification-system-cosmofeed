@@ -15,12 +15,12 @@ class NotificationService {
             return new error_1.InternalError("User contact endpoint not found", 404);
         }
         console.log("User contact endpoint : ", userContactEndpointId);
-        console.log("Pushing to Kafka messaging queue");
         var topicName = NotificationService.getTopicName(notificationMode);
         var messages = [
             { mode: notificationMode, endpointId: userContactEndpointId, message: message }
         ];
         kafka_1.KafkaProducer.SendBatch(messages, topicName);
+        console.log("Successfully pushed message to Kafka messaging queue : ", topicName);
         return null;
     }
     static getTopicName(notification_Mode) {

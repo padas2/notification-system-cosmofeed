@@ -1,7 +1,7 @@
-import app  from '../app'
+import app  from '../index'
 import { NotificationService } from '../service/notification'
 
-app.post('/notifications/send', function(request: any, response: any){
+exports.sendNotification = function(request: any, response: any){
   console.log(request.body)
   var body = request.body
   
@@ -14,4 +14,4 @@ app.post('/notifications/send', function(request: any, response: any){
   
   response.setHeader('Content-Type', 'application/json');
   response.end(JSON.stringify({ data: "Notification will be sent" }));
-});
+}
