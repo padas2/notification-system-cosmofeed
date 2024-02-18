@@ -1,7 +1,15 @@
 # notification-system-cosmofeed
 
-## High level Architecture diagram:
-![alt text](https://github.com/padas2/notification-system-cosmofeed/blob/master/notification-system-cosmofeed.jpg?raw=true)
+## Table of Contents:
+[High level Architecture diagram] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#functional-requirements)
+[Non Functional requirements] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#non-functional-requirements)
+[High level Architecture diagram] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#high-level-architecture-diagram)
+[Components and Architecture] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#components-and-architecture)
+[Api-Contracts] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#api-contracts)
+[Pre-requisites] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#pre-requisites)
+[Run-time instructions] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#run-time-instructions)
+[Improvements] (https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#improvements)
+
 
 ### Functional requirements:
 * Should be able to send notifications to users via Email, SMS, Push Notification.
@@ -13,6 +21,9 @@
 * Extensibility: High
 * Scalability: Low - Medium [ Keeping it low for now]
 
+### High level Architecture diagram:
+![alt text](https://github.com/padas2/notification-system-cosmofeed/blob/master/notification-system-cosmofeed.jpg?raw=true)
+
 ### Components and Architecture:
 * Works on a service based architecture.
 * Notifications service: To receive all incoming requests via HTTP.
@@ -20,6 +31,17 @@
 * Kafka as Message Queue: To function as internal message queue for other Notification system workers.
 * Notification service workers: A kafka consumer which reads message from a designated queue and hit the corresponding 3rd party system to send out
                                 a notification.
+
+### Api-Contracts:
+* Send notification Rest Api:
+  ```
+    POST http://localhost:3000/notifications/send/send
+    {
+      "user_id": 6, // allowed-values: [2,3,4,5,6]
+      "notification_mode": "push_notification", [email, sms, push_notification]
+      "message": "Hello Loyal customer, wishing you a Happy New Year()"
+    }
+  ```
 
 ### Pre-requisites:
 * To see this system in action, need to have 
@@ -35,18 +57,7 @@
       ```
   * Now, open a Postman or any Rest Api client, fire the below mentioned Api to see how the system responds.
   * To follow the logs, first find the container containing the nodeJs code by first running the ```docker ps``` command.
-    * Then run ```docker logs --follow <above-obtained-container-id>```
-        
-### Api-Contracts:
-* Send notification Rest Api:
-  ```
-    POST http://localhost:3000/notifications/send/send
-    {
-      "user_id": 6, // allowed-values: [2,3,4,5,6]
-      "notification_mode": "push_notification", [email, sms, push_notification]
-      "message": "Hello Loyal customer, wishing you a Happy New Year()"
-    }
-  ``` 
+    * Then run ```docker logs --follow <above-obtained-container-id>``` 
 
 ### Improvements:
 * Code structure can be improved to follow a Domain Driven Design.
