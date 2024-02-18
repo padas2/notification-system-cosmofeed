@@ -1,7 +1,7 @@
 # notification-system-cosmofeed
 
 ## Table of Contents:
-* [High level Architecture diagram](https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#functional-requirements)
+* [Function requirements](https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#functional-requirements)
 * [Non Functional requirements](https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#non-functional-requirements)
 * [High level Architecture diagram](https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#high-level-architecture-diagram)
 * [Components and Architecture](https://github.com/padas2/notification-system-cosmofeed/tree/release/v1.0?tab=readme-ov-file#components-and-architecture)
