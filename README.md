@@ -44,6 +44,6 @@
 ### Improvements:
 * Code structure can be improved to follow a Domain Driven Design.
 * In-memory db can be replaced with an actual Database interaction.
-* All hardcoded infrastructure variables to be replaced with ENVs injected at runtime.
-* Routers to be defined separately rather than in index.ts.
+* All hardcoded infrastructure variables to be replaced with ENVs injected at runtime.   -- DONE
+* Routers to be defined separately rather than in index.ts.                              -- DONE
 * Actual integration can be done with FCM client, TextLocal client rather than keeping empty for now.
