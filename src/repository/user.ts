@@ -1,4 +1,5 @@
 import { User} from '../model/user'
+import { emailNotificationMode, smsNotificationMode, pnNotificationMode} from '../globals/globals'
 
 export class InMemoryUsersRepo {
   private static users: Map<number, User>
@@ -21,11 +22,11 @@ export class InMemoryUsersRepo {
 
     var user = this.users.get(user_id)
     switch(notification_mode) {
-      case "email": 
+      case emailNotificationMode: 
         return user?.email
-      case "sms": 
+      case smsNotificationMode: 
         return user?.phoneNumber
-      case "push_notification": 
+      case pnNotificationMode: 
         return user?.deviceTokenId
     }
     return ""

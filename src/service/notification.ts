@@ -2,7 +2,7 @@ import { InMemoryUsersRepo } from '../repository/user'
 import { InternalError } from '../../pkg/error'
 import { KafkaProducer } from  '../client/kafka/kafka'
 import { NotificationMessage } from '../model/kafka'
-import { smsTopicName, smsPushNotificationMode, 
+import { smsTopicName, smsNotificationMode, 
           emailNotificationMode, emailTopicName,
           pnNotificationMode, pushNotificationTopicName } from '../globals/globals'
 
@@ -30,7 +30,7 @@ export class NotificationService {
 
   public static getTopicName(notification_Mode: string): string {
     switch(notification_Mode) {
-      case smsPushNotificationMode:
+      case smsNotificationMode:
         return smsTopicName
       case emailNotificationMode:
         return emailTopicName

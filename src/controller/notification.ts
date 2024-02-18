@@ -1,4 +1,3 @@
-import app  from '../index'
 import { NotificationService } from '../service/notification'
 
 exports.sendNotification = function(request: any, response: any){
