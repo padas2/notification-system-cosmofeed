@@ -1,6 +1,6 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
 import { MessageProcessor } from '../pn/messageProcessor'
-import { kafkaClientId, pushNotificationTopicName } from '../../globals/globals'
+import { kafkaClientIdPNSide, pushNotificationTopicName, defautKafkaHost } from '../../globals/globals'
 
 export class PNKafkaConsumer {
   private static kafkaConsumer: Consumer
@@ -39,8 +39,12 @@ export class PNKafkaConsumer {
 
   private static createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
-      clientId: kafkaClientId,
-      brokers: ['localhost:9092'],
+      clientId: kafkaClientIdPNSide,
+      brokers: [process.env.KAFKA_HOST || defautKafkaHost ],
+      retry: {
+        initialRetryTime: 5000,
+        retries: 10,
+      }
     })
     const consumer = kafka.consumer({ groupId: 'pn_topic_consumer_group' })
     return consumer

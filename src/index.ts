@@ -15,6 +15,7 @@ KafkaConsumers.Start()
 // Initing database components
 InMemoryUsersRepo.Init()
 
+console.log("KAFKA_HOST : ", process.env.KAFKA_HOST)
 // Initing HTTP components
 var app = express();
 app.use(bodyParser.json());

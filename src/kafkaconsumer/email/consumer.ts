@@ -1,6 +1,6 @@
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
 import { MessageProcessor } from './messageProcessor'
-import { kafkaClientId, emailTopicName } from '../../globals/globals'
+import { kafkaClientIdEmailSide, emailTopicName, defautKafkaHost } from '../../globals/globals'
 
 export class EmailKafkaConsumer {
   private static kafkaConsumer: Consumer
@@ -39,8 +39,12 @@ export class EmailKafkaConsumer {
 
   private static createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
-      clientId: kafkaClientId,
-      brokers: ['localhost:9092'],
+      clientId: kafkaClientIdEmailSide,
+      brokers: [process.env.KAFKA_HOST || defautKafkaHost ],
+      retry: {
+        initialRetryTime: 5000,
+        retries: 10,
+      }
     })
     const consumer = kafka.consumer({ groupId: 'email_topic_consumer_group' })
     return consumer

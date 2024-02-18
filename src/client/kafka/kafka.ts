@@ -1,6 +1,6 @@
 import { Kafka, Message, Producer, ProducerBatch, TopicMessages } from 'kafkajs'
 import { NotificationMessage } from '../../model/kafka'
-import { kafkaClientId } from '../../globals/globals'
+import { kafkaClientIdClientSide, defautKafkaHost } from '../../globals/globals'
 
 export class KafkaProducer {
   private static producer: Producer
@@ -40,8 +40,12 @@ export class KafkaProducer {
 
   private static createProducer() : Producer {
     const kafka = new Kafka({
-      clientId: kafkaClientId,
-      brokers: ["localhost:9092"],
+      clientId: kafkaClientIdClientSide,
+      brokers: [process.env.KAFKA_HOST || defautKafkaHost],
+      retry: {
+        initialRetryTime: 5000,
+        retries: 10,
+      }
     })
     return kafka.producer()
   }
