@@ -66,3 +66,5 @@
 * Routers to be defined separately rather than in index.ts.                              -- DONE
 * Actual integration can be done with FCM client, TextLocal client rather than keeping empty for now.
 * Dockerize so that it can be run on its own without installation of any external softwares -- DONE
+
+### Difference to check if things work out
