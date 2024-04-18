@@ -6,7 +6,7 @@ import { KafkaConsumers } from './kafkaconsumer/index'
 var express = require('express');
 var notifications = require('../src/controller/notification');
 
-// Initing kafka components and saving changes and sacing vhancefsklfdj and getting in new changes
+// Initing kafka components and saving changes and sacing vhancefsklfdj and getting in new changes and again detecting new changes
 // Add few more changes and more changes than previous and firther changes and one more change and further new changes
 KafkaProducer.Init()
 KafkaProducer.Start()
