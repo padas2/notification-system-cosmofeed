@@ -6,8 +6,8 @@ import { KafkaConsumers } from './kafkaconsumer/index'
 var express = require('express');
 var notifications = require('../src/controller/notification');
 
-// Initing kafka components
-// Initing diff components and other different components
+// Initing kafka components and diff
+// Initing diff components and other different components and other components
 KafkaProducer.Init()
 KafkaProducer.Start()
 KafkaConsumers.Init()
