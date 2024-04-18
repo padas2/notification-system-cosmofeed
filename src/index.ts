@@ -7,7 +7,7 @@ var express = require('express');
 var notifications = require('../src/controller/notification');
 
 // Initing kafka components
-// Initing diff components
+// Initing diff components and other different components
 KafkaProducer.Init()
 KafkaProducer.Start()
 KafkaConsumers.Init()
